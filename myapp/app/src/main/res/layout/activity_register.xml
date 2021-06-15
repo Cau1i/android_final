@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/register"
+    tools:context=".activity.RegisterActivity">
+
+    <TextView
+        android:id="@+id/tv_login"
+        android:layout_width="260dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="15dp"
+        android:gravity="center"
+        android:text="Create Account"
+        android:textSize="28sp"
+        android:typeface="serif"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/lottie_login"
+        android:layout_width="260dp"
+        android:layout_height="260dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.15"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="false"
+        app:lottie_rawRes="@raw/game_controller" />
+
+
+    <EditText
+        android:id="@+id/et_register_account"
+        android:layout_width="340dp"
+        android:layout_height="50dp"
+        android:background="@drawable/shape_login_et"
+        android:gravity="center"
+        android:hint="Account"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lottie_login"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/img_account"
+        app:layout_constraintBottom_toBottomOf="@+id/et_register_account"
+        app:layout_constraintEnd_toEndOf="@+id/et_register_account"
+        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintStart_toStartOf="@+id/et_register_account"
+        app:layout_constraintTop_toTopOf="@+id/et_register_account" />
+
+    <EditText
+        android:id="@+id/et_register_password"
+        android:layout_width="340dp"
+        android:layout_height="50dp"
+        android:background="@drawable/shape_login_et"
+        android:gravity="center"
+        android:hint="Password"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_register_account"
+        app:layout_constraintVertical_bias="0.1" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/img_password"
+        app:layout_constraintBottom_toBottomOf="@+id/et_register_password"
+        app:layout_constraintEnd_toEndOf="@+id/et_register_password"
+        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintStart_toStartOf="@+id/et_register_password"
+        app:layout_constraintTop_toTopOf="@+id/et_register_password" />
+
+
+    <Button
+        android:id="@+id/btn_start"
+        android:layout_width="340dp"
+        android:layout_height="50dp"
+        android:background="@drawable/shape_go_btn"
+        android:text="GET STARTED!"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_register_password"
+        app:layout_constraintVertical_bias="0.3" />
+
+    <TextView
+        android:id="@+id/tv_have_account"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="I HAVE AN ACCOUNT?"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_start"
+        app:layout_constraintVertical_bias="0.1" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
