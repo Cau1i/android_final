@@ -26,6 +26,7 @@ public class LoginActivity extends BaseActivity {
     private Button btnLogin;
     private EditText etAccount, etPassword;
     private Object String;
+    private LottieAnimationView animationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,14 +66,21 @@ public class LoginActivity extends BaseActivity {
                 LoginResponse loginResponse = gson.fromJson(res, LoginResponse.class);
                 if (loginResponse.getCode() == 0) {//为0登录成功，得到token
                     String token = loginResponse.getToken();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            animationView = (LottieAnimationView) findViewById(R.id.lottie_login);
+                            animationView.playAnimation();//播放动画
+                        }
+                    });
 //                    SharedPreferences sharedPreferences = getSharedPreferences("sp_example", MODE_PRIVATE);//将token保存到本地
 //                    SharedPreferences.Editor editor = sharedPreferences.edit();
 //                    editor.putString("token", token);
 //                    editor.commit();
+
                     saveStringToSp("token", token);
+                    navigateTo(HomeActivity.class);//跳转到主页
                     showToastSync("登陆成功");
-                    LottieAnimationView animationView = (LottieAnimationView) findViewById(R.id.lottie_login);
-                    animationView.playAnimation();//播放动画
                 } else {
                     showToastSync("登陆失败");
                 }
