@@ -63,6 +63,7 @@ public class RegisterActivity extends BaseActivity {
         Api.config(ApiConfig.REGISTER, params).postRequest(this, new TtitCallback() {
             @Override
             public void onSuccess(final String res) {
+                Log.e("onSuccess", res);
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
