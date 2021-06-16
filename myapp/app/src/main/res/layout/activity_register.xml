@@ -66,6 +66,7 @@
         android:background="@drawable/shape_login_et"
         android:gravity="center"
         android:hint="Password"
+        android:inputType="textPassword"
         android:textColor="@color/white"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -86,7 +87,7 @@
 
 
     <Button
-        android:id="@+id/btn_start"
+        android:id="@+id/btn_register"
         android:layout_width="340dp"
         android:layout_height="50dp"
         android:background="@drawable/shape_go_btn"
@@ -97,7 +98,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/et_register_password"
-        app:layout_constraintVertical_bias="0.3" />
+        app:layout_constraintVertical_bias="0.35" />
 
     <TextView
         android:id="@+id/tv_have_account"
@@ -109,7 +110,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_start"
+        app:layout_constraintTop_toBottomOf="@+id/btn_register"
         app:layout_constraintVertical_bias="0.1" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
