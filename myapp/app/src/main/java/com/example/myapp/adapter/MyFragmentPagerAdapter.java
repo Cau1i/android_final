@@ -38,6 +38,6 @@ public class MyFragmentPagerAdapter extends FragmentStateAdapter {
 
     @Override
     public int getItemCount() {
-        return 3;
+        return mFragments.size();
     }
 }
