@@ -2,12 +2,15 @@ package com.example.myapp.activity;
 
 import com.airbnb.lottie.LottieAnimationView;
 
+import android.animation.Animator;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 
 import com.example.myapp.entity.LoginResponse;
@@ -24,22 +27,50 @@ import java.util.HashMap;
 
 public class LoginActivity extends BaseActivity {
     private Button btnLogin;
+    private CheckBox cbRemember;
     private EditText etAccount, etPassword;
-    private Object String;
     private LottieAnimationView animationView;
+    private String account;
+    private String password;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+    protected int initLayout() {
+        return R.layout.activity_login;
+    }
+
+    @Override
+    protected void initView() {
         btnLogin = findViewById(R.id.btn_go);
+        cbRemember = findViewById(R.id.cb_remember);
         etAccount = findViewById(R.id.et_login_account);
         etPassword = findViewById(R.id.et_login_password);
+        animationView = findViewById(R.id.lottie_login);
+    }
+
+    @Override
+    protected void initData() {
+        if (getBooleanFromSP("checkboxBoolean", false)) {
+            cbRemember.setChecked(true);
+            etAccount.setText(getStringFromSP("account"));
+            etPassword.setText(getStringFromSP("password"));
+        }
+
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String account = etAccount.getText().toString().trim();
-                String password = etPassword.getText().toString().trim();
+                account = etAccount.getText().toString().trim();
+                password = etPassword.getText().toString().trim();
+                //按钮被选中，下次进入时会显示账号和密码
+                //按钮被选中，清空账号和密码，下次进入时会显示账号和密码为空
+                if (cbRemember.isChecked()) {
+                    saveStringToSp("account", account);//将账号保存到本地
+                    saveStringToSp("password", password);//将密码保存到本地
+                    putBooleanFromSP("checkboxBoolean", true);
+                } else {
+                    saveStringToSp("account", null);
+                    saveStringToSp("password", null);
+                    putBooleanFromSP("checkboxBoolean", false);
+                }
                 login(account, password);
             }
         });
@@ -69,20 +100,35 @@ public class LoginActivity extends BaseActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            animationView = (LottieAnimationView) findViewById(R.id.lottie_login);
                             animationView.playAnimation();//播放动画
+                            animationView.addAnimatorListener(new Animator.AnimatorListener() {
+                                @Override
+                                public void onAnimationStart(Animator animation) {
+
+                                }
+
+                                @Override
+                                public void onAnimationEnd(Animator animation) {
+                                    navigateTo(HomeActivity.class);//跳转到主页
+                                }
+
+                                @Override
+                                public void onAnimationCancel(Animator animation) {
+
+                                }
+
+                                @Override
+                                public void onAnimationRepeat(Animator animation) {
+
+                                }
+                            });
                         }
                     });
-//                    SharedPreferences sharedPreferences = getSharedPreferences("sp_example", MODE_PRIVATE);//将token保存到本地
-//                    SharedPreferences.Editor editor = sharedPreferences.edit();
-//                    editor.putString("token", token);
-//                    editor.commit();
+                    saveStringToSp("token", token);//将token存储到本地
 
-                    saveStringToSp("token", token);
-                    navigateTo(HomeActivity.class);//跳转到主页
-                    showToastSync("登陆成功");
+                    showToastSync("登录成功");
                 } else {
-                    showToastSync("登陆失败");
+                    showToastSync("登录失败");
                 }
             }
 

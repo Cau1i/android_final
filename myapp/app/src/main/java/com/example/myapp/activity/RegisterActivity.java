@@ -22,15 +22,21 @@ public class RegisterActivity extends BaseActivity {
     private Button btnRegister;
     private TextView tvHaveAccount;
     private EditText etAccount, etPassword;
+    @Override
+    protected int initLayout() {
+        return R.layout.activity_register;
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
+    protected void initView() {
         btnRegister = findViewById(R.id.btn_register);
         tvHaveAccount = findViewById(R.id.tv_have_account);
         etAccount = findViewById(R.id.et_register_account);
         etPassword = findViewById(R.id.et_register_password);
+    }
+
+    @Override
+    protected void initData() {
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

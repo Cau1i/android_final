@@ -1,21 +1,24 @@
 package com.example.myapp.fragment;
 
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
 import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
 
 import com.example.myapp.R;
+import com.example.myapp.adapter.HomeAdapter;
+import com.example.myapp.util.StringUtils;
+import com.google.android.material.tabs.TabLayout;
 
-public class HomeFragment extends Fragment {
+import java.util.ArrayList;
+import java.util.List;
 
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+public class HomeFragment extends BaseFragment {
+    private TabLayout mTabLayout;
+    private ViewPager mViewPager;
+    private HomeAdapter mHomeAdapter;
+    private ArrayList<Fragment> mFragments;
+    private String[] mTitles = {"首页", "资讯", "测评", "节目", "攻略", "专栏", "历史"};
+    ;
 
-    private String mParam1;
-    private String mParam2;
 
     public HomeFragment() {
     }
@@ -26,16 +29,35 @@ public class HomeFragment extends Fragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+    protected int initLayout() {
+        return R.layout.fragment_home;
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_home, container, false);
+    protected void initView() {
+        mViewPager = mRootView.findViewById(R.id.fixedViewPager);
+        mTabLayout = mRootView.findViewById(R.id.tab_layout);
+    }
+
+    @Override
+    protected void initData() {
+        mFragments = new ArrayList<>();
+
+        for (String title : mTitles) {
+            mFragments.add(VideoFragment.newInstance(title));
+        }
+//        mTitles.add("首页");
+//        mTitles.add("资讯");
+//        mTitles.add("评测");
+//
+//        mFragments.add(VideoFragment.newInstance());
+//        mFragments.add(NewsFragment.newInstance());
+//        mFragments.add(EvaluationFragment.newInstance());
+
+        mHomeAdapter = new HomeAdapter(getActivity().getSupportFragmentManager(), mTitles, mFragments);
+        mViewPager.setOffscreenPageLimit(mFragments.size());//预加载
+        mViewPager.setAdapter(mHomeAdapter);
+        mTabLayout.setupWithViewPager(mViewPager);
+        //mTabLayout.setTabsFromPagerAdapter(mHomeAdapter);
     }
 }

@@ -1,47 +1,58 @@
 package com.example.myapp.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
-import android.os.Bundle;
 import android.view.View;
 import android.widget.RadioButton;
 
 import com.example.myapp.R;
-import com.example.myapp.adapter.MyFragmentPagerAdapter;
+import com.example.myapp.adapter.MyFragmentStateAdapter;
 import com.example.myapp.fragment.CollectFragment;
 import com.example.myapp.fragment.HomeFragment;
 import com.example.myapp.fragment.MyFragment;
+import com.example.myapp.fragment.NewsFragment;
 
 import java.util.ArrayList;
 
-public class HomeActivity extends AppCompatActivity implements View.OnClickListener {
+public class HomeActivity extends BaseActivity implements View.OnClickListener {
     private ViewPager2 viewPager2;
-    private MyFragmentPagerAdapter pagerAdapter;
-    private RadioButton rb_home, rb_search, rb_my, rb_current;
-
-    private String[] mTitles = {"首页", "搜索", "我的"};
+    private MyFragmentStateAdapter myFragmentStateAdapter;
+    private RadioButton rb_home, rb_collect, rb_my, rb_current;
     private ArrayList<Fragment> mFragments = new ArrayList<>();
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
-        initPager();
-        initTabView();
+    protected int initLayout() {
+        return R.layout.activity_home;
     }
 
-    //管理Fragment
-    private void initPager() {
+    @Override
+    protected void initView() {
+        rb_home = findViewById(R.id.tab_home);
+        rb_collect = findViewById(R.id.tab_collect);
+        rb_my = findViewById(R.id.tab_mine);
+
+        rb_home.setOnClickListener(this);
+        rb_collect.setOnClickListener(this);
+        rb_my.setOnClickListener(this);
+
+        rb_home.setSelected(false);
+        rb_current = rb_home;
+    }
+
+    @Override
+    protected void initData() {
         viewPager2 = findViewById(R.id.viewpager2);
         mFragments.add(HomeFragment.newInstance());
         mFragments.add(CollectFragment.newInstance());
         mFragments.add(MyFragment.newInstance());
 
-        pagerAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager(), getLifecycle(), mFragments, mTitles);
-        viewPager2.setAdapter(pagerAdapter);
+        myFragmentStateAdapter = new MyFragmentStateAdapter(getSupportFragmentManager(), getLifecycle(), mFragments);
+
+        viewPager2.setAdapter(myFragmentStateAdapter);
         viewPager2.setUserInputEnabled(false);//设置禁止滑动
+
+        viewPager2.setOffscreenPageLimit(mFragments.size());//预加载
 
         viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
@@ -50,20 +61,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 changeTab(position);
             }
         });
-    }
-
-    //底部UI管理
-    private void initTabView() {
-        rb_home = findViewById(R.id.tab_home);
-        rb_search = findViewById(R.id.tab_search);
-        rb_my = findViewById(R.id.tab_mine);
-
-        rb_home.setOnClickListener(this);
-        rb_search.setOnClickListener(this);
-        rb_my.setOnClickListener(this);
-
-        rb_home.setSelected(false);
-        rb_current = rb_home;
     }
 
     private void changeTab(int position) {
@@ -76,11 +73,11 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 rb_home.setSelected(true);
                 rb_current = rb_home;
                 break;
-            case R.id.tab_search:
+            case R.id.tab_collect:
                 viewPager2.setCurrentItem(1, false);
             case 1:
-                rb_search.setSelected(true);
-                rb_current = rb_search;
+                rb_collect.setSelected(true);
+                rb_current = rb_collect;
                 break;
             case R.id.tab_mine:
                 viewPager2.setCurrentItem(2, false);
