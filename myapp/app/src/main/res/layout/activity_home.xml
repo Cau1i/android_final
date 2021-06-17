@@ -9,8 +9,8 @@
     android:orientation="vertical"
     tools:context=".activity.HomeActivity">
 
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/viewpager"
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewpager2"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1" />
@@ -20,18 +20,5 @@
         android:layout_height="1dp"
         android:background="@color/white" />
 
-    <com.flyco.tablayout.CommonTabLayout
-        android:id="@+id/commonTabLayout"
-        android:layout_width="match_parent"
-        android:layout_height="66dp"
-        android:background="#ffffff"
-        tl:tl_iconHeight="30dp"
-        tl:tl_iconWidth="30dp"
-        tl:tl_indicator_color="#2C97DE"
-        tl:tl_indicator_height="0dp"
-        tl:tl_textSelectColor="#447ff2"
-        tl:tl_textUnselectColor="@color/black"
-        tl:tl_textsize="14sp"
-        tl:tl_underline_color="#DDDDDD"
-        tl:tl_underline_height="1dp" />
+    <include layout="@layout/bottom_layout"></include>
 </LinearLayout>
