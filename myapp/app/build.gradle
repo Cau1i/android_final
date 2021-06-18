@@ -41,7 +41,10 @@ dependencies {
     implementation 'com.airbnb.android:lottie:3.4.1'//lottie动画
     implementation 'com.squareup.okhttp3:okhttp:3.10.0'//okhttp架包
     implementation 'com.google.code.gson:gson:2.8.7'//gson库
+    implementation 'androidx.recyclerview:recyclerview:1.0.0'//recyclerview
 
-    implementation 'com.jakewharton:butterknife:10.0.0'
+    implementation 'com.jakewharton:butterknife:10.0.0'//butterknife
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.0.0'
+
+
 }

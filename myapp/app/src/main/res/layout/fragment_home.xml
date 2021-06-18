@@ -48,11 +48,11 @@
             android:layout_height="?attr/actionBarSize"
             android:background="@color/white"
             app:tabGravity="fill"
-            app:tabIndicatorColor="#677fad"
+            app:tabIndicatorColor="@color/selected"
             app:tabIndicatorHeight="2dp"
             app:tabMode="scrollable"
-            app:tabSelectedTextColor="#677fad"
-            app:tabTextColor="@color/black" />
+            app:tabSelectedTextColor="@color/selected"
+            app:tabTextColor="@color/unselected" />
     </LinearLayout>
 
     <androidx.viewpager.widget.ViewPager

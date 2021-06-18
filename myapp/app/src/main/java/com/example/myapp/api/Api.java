@@ -46,7 +46,7 @@ public class Api {
     }
 
     public void postRequest(Context context, final TtitCallback callback) {
-        SharedPreferences sp = context.getSharedPreferences("sp_ttit", MODE_PRIVATE);
+        SharedPreferences sp = context.getSharedPreferences("sp_example", MODE_PRIVATE);
         String token = sp.getString("token", "");
         JSONObject jsonObject = new JSONObject(mParams);
         String jsonStr = jsonObject.toString();
@@ -79,7 +79,7 @@ public class Api {
     }
 
     public void getRequest(Context context, final TtitCallback callback) {
-        SharedPreferences sp = context.getSharedPreferences("sp_ttit", MODE_PRIVATE);
+        SharedPreferences sp = context.getSharedPreferences("sp_example", MODE_PRIVATE);
         String token = sp.getString("token", "");
         String url = getAppendUrl(requestUrl, mParams);
         Request request = new Request.Builder()
