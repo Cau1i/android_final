@@ -16,7 +16,7 @@
         <RadioGroup
             android:id="@+id/tabs_rg"
             android:layout_width="match_parent"
-            android:layout_height="58dp"
+            android:layout_height="50dp"
             android:background="#FFFFFF"
             android:orientation="horizontal">
 
@@ -30,7 +30,7 @@
                 android:gravity="center"
                 android:padding="4dp"
                 android:text="主页"
-                android:textColor="@color/black"
+                android:textColor="@drawable/tab_text"
                 android:textSize="12dp" />
 
             <RadioButton
@@ -43,7 +43,7 @@
                 android:gravity="center"
                 android:padding="4dp"
                 android:text="收藏"
-                android:textColor="@color/black"
+                android:textColor="@drawable/tab_text"
                 android:textSize="12dp" />
 
             <RadioButton
@@ -52,11 +52,11 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:button="@null"
-                android:drawableTop="@drawable/tab_mine"
+                android:drawableTop="@drawable/tab_my"
                 android:gravity="center"
                 android:padding="4dp"
                 android:text="我的"
-                android:textColor="@color/black"
+                android:textColor="@drawable/tab_text"
                 android:textSize="12dp" />
         </RadioGroup>
     </LinearLayout>
