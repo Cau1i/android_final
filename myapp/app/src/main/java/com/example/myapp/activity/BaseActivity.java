@@ -57,8 +57,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     //封装SharedPreferences得到信息
     protected String getStringFromSP(String key) {
         SharedPreferences sharedPreferences = getSharedPreferences("sp_example", MODE_PRIVATE);
-        String string = sharedPreferences.getString(key, "");
-        return string;
+        return sharedPreferences.getString(key, "");
+
     }
 
     protected boolean getBooleanFromSP(String key, boolean flag) {

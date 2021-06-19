@@ -17,7 +17,6 @@ public class HomeFragment extends BaseFragment {
     private HomeAdapter mHomeAdapter;
     private ArrayList<Fragment> mFragments;
     private String[] mTitles = {"首页", "资讯", "测评", "节目", "攻略", "专栏", "历史"};
-    ;
 
 
     public HomeFragment() {
@@ -46,18 +45,10 @@ public class HomeFragment extends BaseFragment {
         for (String title : mTitles) {
             mFragments.add(VideoFragment.newInstance(title));
         }
-//        mTitles.add("首页");
-//        mTitles.add("资讯");
-//        mTitles.add("评测");
-//
-//        mFragments.add(VideoFragment.newInstance());
-//        mFragments.add(NewsFragment.newInstance());
-//        mFragments.add(EvaluationFragment.newInstance());
 
         mHomeAdapter = new HomeAdapter(getActivity().getSupportFragmentManager(), mTitles, mFragments);
         mViewPager.setOffscreenPageLimit(mFragments.size());//预加载
         mViewPager.setAdapter(mHomeAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
-        //mTabLayout.setTabsFromPagerAdapter(mHomeAdapter);
     }
 }

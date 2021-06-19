@@ -1,7 +1,7 @@
 package com.example.myapp.api;
 
 public class ApiConfig {
-    public static final int PAGE_SIZE = 5;
+    public static final int PAGE_SIZE = 5;//每页信息的个数
     public static final String BASE_URl = "http://47.112.180.188:8080/renren-fast";
 //    public static final String BASE_URl = "http://10.77.168.173:8080/renren-fast";
     public static final String LOGIN = "/app/login"; //登录
