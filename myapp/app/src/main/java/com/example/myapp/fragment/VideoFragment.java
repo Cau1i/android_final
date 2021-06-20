@@ -1,18 +1,15 @@
 package com.example.myapp.fragment;
 
+
 import android.content.pm.ActivityInfo;
-import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.view.View;
+import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 
 import com.dueeeke.videocontroller.StandardVideoController;
 import com.dueeeke.videocontroller.component.CompleteView;
@@ -21,8 +18,9 @@ import com.dueeeke.videocontroller.component.GestureView;
 import com.dueeeke.videocontroller.component.TitleView;
 import com.dueeeke.videocontroller.component.VodControlView;
 import com.dueeeke.videoplayer.player.VideoView;
+import com.example.myapp.util.StringUtils;
+import com.google.gson.Gson;
 import com.example.myapp.R;
-import com.example.myapp.activity.LoginActivity;
 import com.example.myapp.adapter.VideoAdapter;
 import com.example.myapp.api.Api;
 import com.example.myapp.api.ApiConfig;
@@ -30,25 +28,24 @@ import com.example.myapp.api.TtitCallback;
 import com.example.myapp.entity.VideoEntity;
 import com.example.myapp.entity.VideoListResponse;
 import com.example.myapp.listener.OnItemChildClickListener;
-import com.example.myapp.listener.OnItemClickListener;
-import com.example.myapp.util.StringUtils;
 import com.example.myapp.util.Tag;
 import com.example.myapp.util.Utils;
-import com.google.gson.Gson;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
-import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import com.scwang.smart.refresh.layout.api.RefreshLayout;
+import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 public class VideoFragment extends BaseFragment implements OnItemChildClickListener {
+
+    private int categoryId;
     private RecyclerView recyclerView;
     private RefreshLayout refreshLayout;
-    private int pageNum = 1;//列表页面
+    private int pageNum = 1;
     private VideoAdapter videoAdapter;
-    private List<VideoEntity> datas;
+    private List<VideoEntity> datas = new ArrayList<>();
     private LinearLayoutManager linearLayoutManager;
 
     protected VideoView mVideoView;
@@ -65,13 +62,28 @@ public class VideoFragment extends BaseFragment implements OnItemChildClickListe
      */
     protected int mLastPos = mCurPos;
 
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case 0:
+                    videoAdapter.setDatas(datas);
+                    videoAdapter.notifyDataSetChanged();
+                    break;
+            }
+        }
+    };
+
     public VideoFragment() {
     }
 
-    public static VideoFragment newInstance(String title) {
+    public static VideoFragment newInstance(int categoryId) {
         VideoFragment fragment = new VideoFragment();
+        fragment.categoryId = categoryId;
         return fragment;
     }
+
 
     @Override
     protected int initLayout() {
@@ -88,13 +100,11 @@ public class VideoFragment extends BaseFragment implements OnItemChildClickListe
     @Override
     protected void initData() {
         linearLayoutManager = new LinearLayoutManager(getActivity());
-        linearLayoutManager.setOrientation(LinearLayout.VERTICAL);
+        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
         videoAdapter = new VideoAdapter(getActivity());
         videoAdapter.setOnItemChildClickListener(this);
         recyclerView.setAdapter(videoAdapter);
-
-        //视频停止事件
         recyclerView.addOnChildAttachStateChangeListener(new RecyclerView.OnChildAttachStateChangeListener() {
             @Override
             public void onChildViewAttachedToWindow(@NonNull View view) {
@@ -114,14 +124,14 @@ public class VideoFragment extends BaseFragment implements OnItemChildClickListe
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-                pageNum = 1;//下拉刷新，重置页数为1
+                pageNum = 1;
                 getVideoList(true);
             }
         });
         refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(RefreshLayout refreshlayout) {
-                pageNum++;//上拉加载，使得页数加1
+                pageNum++;
                 getVideoList(false);
             }
         });
@@ -130,11 +140,11 @@ public class VideoFragment extends BaseFragment implements OnItemChildClickListe
 
     protected void initVideoView() {
         mVideoView = new VideoView(getActivity());
-        mVideoView.setOnStateChangeListener(new com.dueeeke.videoplayer.player.VideoView.SimpleOnStateChangeListener() {
+        mVideoView.setOnStateChangeListener(new VideoView.SimpleOnStateChangeListener() {
             @Override
             public void onPlayStateChanged(int playState) {
                 //监听VideoViewManager释放，重置状态
-                if (playState == com.dueeeke.videoplayer.player.VideoView.STATE_IDLE) {
+                if (playState == VideoView.STATE_IDLE) {
                     Utils.removeViewFormParent(mVideoView);
                     mLastPos = mCurPos;
                     mCurPos = -1;
@@ -221,6 +231,7 @@ public class VideoFragment extends BaseFragment implements OnItemChildClickListe
         getVideoViewManager().add(mVideoView, Tag.LIST);
         mVideoView.start();
         mCurPos = position;
+
     }
 
     private void releaseVideoView() {
@@ -234,7 +245,6 @@ public class VideoFragment extends BaseFragment implements OnItemChildClickListe
         mCurPos = -1;
     }
 
-    //接口请求视频数据
     private void getVideoList(final boolean isRefresh) {
         String token = getStringFromSP("token");
         if (!StringUtils.isEmpty(token)) {
@@ -242,39 +252,33 @@ public class VideoFragment extends BaseFragment implements OnItemChildClickListe
             params.put("token", token);
             params.put("page", pageNum);
             params.put("limit", ApiConfig.PAGE_SIZE);
-            Api.config(ApiConfig.VIDEO_LIST_ALL, params).getRequest(getActivity(), new TtitCallback() {
+            params.put("categoryId", categoryId);
+            Api.config(ApiConfig.VIDEO_LIST_BY_CATEGORY, params).getRequest(getActivity(), new TtitCallback() {
                 @Override
-                public void onSuccess(String res) {
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
+                public void onSuccess(final String res) {
+                    if (isRefresh) {
+                        refreshLayout.finishRefresh(true);
+                    } else {
+                        refreshLayout.finishLoadMore(true);
+                    }
+                    VideoListResponse response = new Gson().fromJson(res, VideoListResponse.class);
+                    if (response != null && response.getCode() == 0) {
+                        List<VideoEntity> list = response.getPage().getList();
+                        if (list != null && list.size() > 0) {
                             if (isRefresh) {
-                                refreshLayout.finishRefresh(true);//传入true表示刷新成功
+                                datas = list;
                             } else {
-                                refreshLayout.finishLoadMore(true);//传入true表示加载成功
+                                datas.addAll(list);
                             }
-                            VideoListResponse response = new Gson().fromJson(res, VideoListResponse.class);
-                            if (response != null && response.getCode() == 0) {
-                                List<VideoEntity> list = response.getPage().getList();
-                                if (list != null && list.size() > 0) {
-                                    if (isRefresh) {
-                                        datas = list;//刷新 让datas得到list的数据
-                                    } else {
-                                        datas.addAll(list);//加载 让datas累加list的数据
-                                    }
-                                    videoAdapter.setDatas(datas);
-                                    videoAdapter.notifyDataSetChanged();
-                                } else {
-                                    if (isRefresh) {
-                                        showToast("暂时无数据加载");
-                                    } else {
-                                        showToast("已无更多数据");
-                                    }
-                                }
+                            mHandler.sendEmptyMessage(0);
+                        } else {
+                            if (isRefresh) {
+                                showToastSync("暂时无数据");
+                            } else {
+                                showToastSync("没有更多数据");
                             }
                         }
-                    });
-//                    showToastSync(res);
+                    }
                 }
 
                 @Override
@@ -286,8 +290,6 @@ public class VideoFragment extends BaseFragment implements OnItemChildClickListe
                     }
                 }
             });
-        } else {
-            navigateTo(LoginActivity.class);
         }
     }
 }

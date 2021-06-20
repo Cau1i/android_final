@@ -38,17 +38,21 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
-    implementation 'com.airbnb.android:lottie:3.4.1'//lottie动画
-    implementation 'com.squareup.okhttp3:okhttp:3.10.0'//okhttp架包
-    implementation 'com.google.code.gson:gson:2.8.7'//gson库
-    implementation 'androidx.recyclerview:recyclerview:1.0.0'//recyclerview
-    implementation 'com.squareup.picasso:picasso:2.5.2'//picasso
-    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.3'//SmartRefreshLayout
+    implementation 'com.airbnb.android:lottie:3.4.1'                    //lottie动画
+    implementation 'com.squareup.okhttp3:okhttp:3.10.0'                 //okhttp架包
+    implementation 'com.google.code.gson:gson:2.8.7'                    //gson库
+    implementation 'androidx.recyclerview:recyclerview:1.0.0'           //recyclerview
+    implementation 'com.squareup.picasso:picasso:2.5.2'                 //picasso
 
-    implementation 'com.jakewharton:butterknife:10.0.0'//butterknife
+    implementation 'androidx.appcompat:appcompat:1.0.0'                 //必须 1.0.0 以上
+    implementation 'com.scwang.smart:refresh-layout-kernel:2.0.1'       //核心必须依赖
+    implementation 'com.scwang.smart:refresh-header-classics:2.0.1'     //经典刷新头
+    implementation 'com.scwang.smart:refresh-footer-classics:2.0.1'     //经典加载
+
+    implementation 'com.jakewharton:butterknife:10.0.0'                 //butterknife
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.0.0'
 
-    implementation 'com.github.dueeeke.dkplayer:dkplayer-java:3.2.6'//视频
+    implementation 'com.github.dueeeke.dkplayer:dkplayer-java:3.2.6'    //视频接口
     implementation 'com.github.dueeeke.dkplayer:dkplayer-ui:3.2.6'
     implementation 'com.github.dueeeke.dkplayer:player-exo:3.2.6'
     implementation 'com.github.dueeeke.dkplayer:player-ijk:3.2.6'
