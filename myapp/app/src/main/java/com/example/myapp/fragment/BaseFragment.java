@@ -64,9 +64,16 @@ public abstract class BaseFragment extends Fragment {
         Looper.loop();
     }
 
-    ///封装Intent
+    //封装Intent
     public void navigateTo(Class cls) {
         Intent intent = new Intent(getActivity(), cls);
+        startActivity(intent);
+    }
+
+    //封装带参Intent
+    public void navigateToWithBundle(Class cls, Bundle bundle) {
+        Intent intent = new Intent(getActivity(), cls);
+        intent.putExtras(bundle);
         startActivity(intent);
     }
 
@@ -84,7 +91,7 @@ public abstract class BaseFragment extends Fragment {
         return sharedPreferences.getString(key, "");
     }
 
-    protected VideoViewManager getVideoViewManager(){
+    protected VideoViewManager getVideoViewManager() {
         return VideoViewManager.instance();
     }
 }

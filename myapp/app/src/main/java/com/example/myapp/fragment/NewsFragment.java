@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.myapp.activity.WebActivity;
 import com.google.gson.Gson;
 import com.example.myapp.R;
 import com.example.myapp.adapter.NewsAdapter;
@@ -77,11 +78,13 @@ public class NewsFragment extends BaseFragment {
             @Override
             public void onItemClick(Serializable obj) {
                 showToast("点击");
-//                NewsEntity newsEntity = (NewsEntity) obj;
+                NewsEntity newsEntity = (NewsEntity) obj;
+                String url = "http://47.112.180.188:8080/newsDetail?title=" + newsEntity.getAuthorName();
 //                String url = "http://192.168.31.32:8089/newsDetail?title=" + newsEntity.getAuthorName();
-//                Bundle bundle = new Bundle();
-//                bundle.putString("url", url);
-//                navigateToWithBundle(WebActivity.class, bundle);
+//                String url = "http://www.qldyk.cn:8080/newsDetail?title=" + newsEntity.getAuthorName();
+                Bundle bundle = new Bundle();
+                bundle.putString("url", url);
+                navigateToWithBundle(WebActivity.class, bundle);
             }
         });
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
