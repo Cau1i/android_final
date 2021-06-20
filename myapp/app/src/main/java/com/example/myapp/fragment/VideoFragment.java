@@ -138,6 +138,9 @@ public class VideoFragment extends BaseFragment implements OnItemChildClickListe
         getVideoList(true);
     }
 
+    /**
+     * 视频点击事件
+     */
     protected void initVideoView() {
         mVideoView = new VideoView(getActivity());
         mVideoView.setOnStateChangeListener(new VideoView.SimpleOnStateChangeListener() {
@@ -234,6 +237,9 @@ public class VideoFragment extends BaseFragment implements OnItemChildClickListe
 
     }
 
+    /**
+     * 释放视频
+     */
     private void releaseVideoView() {
         mVideoView.release();
         if (mVideoView.isFullScreen()) {
@@ -245,6 +251,7 @@ public class VideoFragment extends BaseFragment implements OnItemChildClickListe
         mCurPos = -1;
     }
 
+    //获得视频数据接口
     private void getVideoList(final boolean isRefresh) {
         String token = getStringFromSP("token");
         if (!StringUtils.isEmpty(token)) {

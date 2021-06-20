@@ -18,7 +18,7 @@ import java.util.ArrayList;
 public class HomeActivity extends BaseActivity implements View.OnClickListener {
     private ViewPager2 viewPager2;
     private MyFragmentStateAdapter myFragmentStateAdapter;
-    private RadioButton rb_home, rb_collect, rb_my, rb_current;
+    private RadioButton rb_home, rb_news, rb_my, rb_current;
     private ArrayList<Fragment> mFragments = new ArrayList<>();
 
     @Override
@@ -29,11 +29,11 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
     @Override
     protected void initView() {
         rb_home = findViewById(R.id.tab_home);
-        rb_collect = findViewById(R.id.tab_collect);
+        rb_news = findViewById(R.id.tab_news);
         rb_my = findViewById(R.id.tab_mine);
 
         rb_home.setOnClickListener(this);
-        rb_collect.setOnClickListener(this);
+        rb_news.setOnClickListener(this);
         rb_my.setOnClickListener(this);
 
         rb_home.setSelected(false);
@@ -44,7 +44,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
     protected void initData() {
         viewPager2 = findViewById(R.id.viewpager2);
         mFragments.add(HomeFragment.newInstance());
-        mFragments.add(CollectFragment.newInstance());
+        mFragments.add(NewsFragment.newInstance());
         mFragments.add(MyFragment.newInstance());
 
         myFragmentStateAdapter = new MyFragmentStateAdapter(getSupportFragmentManager(), getLifecycle(), mFragments);
@@ -73,11 +73,11 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
                 rb_home.setSelected(true);
                 rb_current = rb_home;
                 break;
-            case R.id.tab_collect:
+            case R.id.tab_news:
                 viewPager2.setCurrentItem(1, false);
             case 1:
-                rb_collect.setSelected(true);
-                rb_current = rb_collect;
+                rb_news.setSelected(true);
+                rb_current = rb_news;
                 break;
             case R.id.tab_mine:
                 viewPager2.setCurrentItem(2, false);

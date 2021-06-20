@@ -3,7 +3,7 @@ package com.example.myapp.entity;
 import java.io.Serializable;
 import java.util.List;
 
-public class VideoListResponse implements Serializable {
+public class NewsListResponse implements Serializable {
     private String msg;
     private int code;
     private PageBean page;
@@ -37,7 +37,7 @@ public class VideoListResponse implements Serializable {
         private int pageSize;
         private int totalPage;
         private int currPage;
-        private List<VideoEntity> list;
+        private List<NewsEntity> list;
 
         public int getTotalCount() {
             return totalCount;
@@ -71,11 +71,11 @@ public class VideoListResponse implements Serializable {
             this.currPage = currPage;
         }
 
-        public List<VideoEntity> getList() {
+        public List<NewsEntity> getList() {
             return list;
         }
 
-        public void setList(List<VideoEntity> list) {
+        public void setList(List<NewsEntity> list) {
             this.list = list;
         }
     }

@@ -10,7 +10,7 @@
     <TextView
         android:id="@+id/tv_main"
         android:layout_width="310dp"
-        android:layout_height="75dp"
+        android:layout_height="80dp"
         android:layout_marginTop="15dp"
         android:gravity="center"
         android:text="Game Information"
@@ -19,7 +19,7 @@
         android:typeface="serif"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/lottie_main"
@@ -29,7 +29,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_main"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintVertical_bias="0.05"
         app:lottie_autoPlay="true"
         app:lottie_loop="false"
         app:lottie_rawRes="@raw/game_chemistry_animation" />
@@ -46,7 +46,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/lottie_main"
-        app:layout_constraintVertical_bias="0.05" />
+        app:layout_constraintVertical_bias="0.3" />
 
     <Button
         android:id="@+id/btn_login"
@@ -60,6 +60,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_register"
-        app:layout_constraintVertical_bias="0.15" />
+        app:layout_constraintVertical_bias="0.3" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

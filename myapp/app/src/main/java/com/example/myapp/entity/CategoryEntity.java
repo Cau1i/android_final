@@ -3,11 +3,6 @@ package com.example.myapp.entity;
 import java.io.Serializable;
 
 public class CategoryEntity implements Serializable {
-    /**
-     * categoryId : 1
-     * categoryName : 游戏
-     */
-
     private int categoryId;
     private String categoryName;
 

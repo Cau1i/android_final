@@ -35,15 +35,15 @@
                 android:textSize="12dp" />
 
             <RadioButton
-                android:id="@+id/tab_collect"
+                android:id="@+id/tab_news"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:button="@null"
-                android:drawableTop="@drawable/tab_collect"
+                android:drawableTop="@drawable/tab_news"
                 android:gravity="center"
                 android:padding="4dp"
-                android:text="收藏"
+                android:text="资讯"
                 android:textColor="@drawable/tab_text"
                 android:textSize="12dp" />
 
