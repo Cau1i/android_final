@@ -9,9 +9,11 @@ public class VideoEntity implements Serializable {
     private String coverurl;
     private String headurl;
     private String playurl;
-    private int commentNum;
-    private int likeNum;
-    private int collectNum;
+    private String createTime;
+    private String updateTime;
+    private int categoryId;
+    private String categoryName;
+    private VideoSocialEntity videoSocialEntity;
 
     public int getVid() {
         return vid;
@@ -61,28 +63,92 @@ public class VideoEntity implements Serializable {
         this.playurl = playurl;
     }
 
-    public int getCommentnum() {
-        return commentNum;
+    public String getCreateTime() {
+        return createTime;
     }
 
-    public void setCommentnum(int commentnum) {
-        this.commentNum = commentnum;
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime;
     }
 
-    public int getLikenum() {
-        return likeNum;
+    public String getUpdateTime() {
+        return updateTime;
     }
 
-    public void setLikenum(int likenum) {
-        this.likeNum = likenum;
+    public void setUpdateTime(String updateTime) {
+        this.updateTime = updateTime;
     }
 
-    public int getCollectnum() {
-        return collectNum;
+    public int getCategoryId() {
+        return categoryId;
     }
 
-    public void setCollectnum(int collectnum) {
-        this.collectNum = collectnum;
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
+
+    public VideoSocialEntity getVideoSocialEntity() {
+        return videoSocialEntity;
+    }
+
+    public void setVideoSocialEntity(VideoSocialEntity videoSocialEntity) {
+        this.videoSocialEntity = videoSocialEntity;
+    }
+
+    public static class VideoSocialEntity {
+        private int commentnum;
+        private int likenum;
+        private int collectnum;
+        private boolean flagLike;
+        private boolean flagCollect;
+
+        public int getCommentnum() {
+            return commentnum;
+        }
+
+        public void setCommentnum(int commentnum) {
+            this.commentnum = commentnum;
+        }
+
+        public int getLikenum() {
+            return likenum;
+        }
+
+        public void setLikenum(int likenum) {
+            this.likenum = likenum;
+        }
+
+        public int getCollectnum() {
+            return collectnum;
+        }
+
+        public void setCollectnum(int collectnum) {
+            this.collectnum = collectnum;
+        }
+
+        public boolean isFlagLike() {
+            return flagLike;
+        }
+
+        public void setFlagLike(boolean flagLike) {
+            this.flagLike = flagLike;
+        }
+
+        public boolean isFlagCollect() {
+            return flagCollect;
+        }
+
+        public void setFlagCollect(boolean flagCollect) {
+            this.flagCollect = flagCollect;
+        }
     }
 }
 

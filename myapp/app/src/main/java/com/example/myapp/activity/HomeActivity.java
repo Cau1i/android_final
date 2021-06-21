@@ -8,7 +8,6 @@ import android.widget.RadioButton;
 
 import com.example.myapp.R;
 import com.example.myapp.adapter.MyFragmentStateAdapter;
-import com.example.myapp.fragment.CollectFragment;
 import com.example.myapp.fragment.HomeFragment;
 import com.example.myapp.fragment.MyFragment;
 import com.example.myapp.fragment.NewsFragment;

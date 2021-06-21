@@ -7,8 +7,11 @@ import android.os.Bundle;
 import android.os.Looper;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.dueeeke.videoplayer.player.VideoViewManager;
 
 public abstract class BaseActivity extends AppCompatActivity {
     public Context mContext;
@@ -53,30 +56,33 @@ public abstract class BaseActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    //封装SharedPreferences存储信息
-    protected void saveStringToSp(String key, String val) {
+    //插入
+    protected void insertVal(String key, String val) {
         SharedPreferences sharedPreferences = getSharedPreferences("sp_example", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(key, val);
         editor.commit();
     }
 
-    //封装SharedPreferences得到信息
-    protected String getStringFromSP(String key) {
+    //查询
+    protected String findByKey(String key) {
         SharedPreferences sharedPreferences = getSharedPreferences("sp_example", MODE_PRIVATE);
         return sharedPreferences.getString(key, "");
-
     }
 
-    protected boolean getBooleanFromSP(String key, boolean flag) {
+    protected boolean getBooleanByKey(String key, boolean flag) {
         SharedPreferences sharedPreferences = getSharedPreferences("sp_example", MODE_PRIVATE);
         return sharedPreferences.getBoolean(key, flag);
     }
 
-    protected void putBooleanFromSP(String key, boolean flag) {
+    protected void putBooleanByKey(String key, boolean flag) {
         SharedPreferences sharedPreferences = getSharedPreferences("sp_example", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean(key, flag);
         editor.commit();
+    }
+
+    protected VideoViewManager getVideoViewManager() {
+        return VideoViewManager.instance();
     }
 }

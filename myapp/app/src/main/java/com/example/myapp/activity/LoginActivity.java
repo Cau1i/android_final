@@ -49,10 +49,10 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        if (getBooleanFromSP("checkboxBoolean", false)) {
+        if (getBooleanByKey("checkboxBoolean", false)) {
             cbRemember.setChecked(true);
-            etAccount.setText(getStringFromSP("account"));
-            etPassword.setText(getStringFromSP("password"));
+            etAccount.setText(findByKey("account"));
+            etPassword.setText(findByKey("password"));
         }
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
@@ -63,13 +63,13 @@ public class LoginActivity extends BaseActivity {
                 //按钮被选中，下次进入时会显示账号和密码
                 //按钮被选中，清空账号和密码，下次进入时会显示账号和密码为空
                 if (cbRemember.isChecked()) {
-                    saveStringToSp("account", account);//将账号保存到本地
-                    saveStringToSp("password", password);//将密码保存到本地
-                    putBooleanFromSP("checkboxBoolean", true);
+                    insertVal("account", account);//将账号保存到本地
+                    insertVal("password", password);//将密码保存到本地
+                    putBooleanByKey("checkboxBoolean", true);
                 } else {
-                    saveStringToSp("account", null);
-                    saveStringToSp("password", null);
-                    putBooleanFromSP("checkboxBoolean", false);
+                    insertVal("account", null);
+                    insertVal("password", null);
+                    putBooleanByKey("checkboxBoolean", false);
                 }
                 login(account, password);
             }
@@ -97,7 +97,7 @@ public class LoginActivity extends BaseActivity {
                 LoginResponse loginResponse = gson.fromJson(res, LoginResponse.class);
                 if (loginResponse.getCode() == 0) {//为0登录成功，得到token
                     String token = loginResponse.getToken();
-                    saveStringToSp("token", token);//将token存储到本地
+                    insertVal("token", token);//将token存储到本地
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -126,8 +126,6 @@ public class LoginActivity extends BaseActivity {
                             });
                         }
                     });
-
-
                     showToastSync("登录成功");
                 } else {
                     showToastSync("登录失败");

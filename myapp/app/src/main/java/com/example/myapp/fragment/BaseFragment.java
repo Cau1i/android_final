@@ -16,6 +16,8 @@ import androidx.fragment.app.Fragment;
 
 import com.dueeeke.videoplayer.player.VideoViewManager;
 
+import static android.content.Context.MODE_PRIVATE;
+
 public abstract class BaseFragment extends Fragment {
     protected View mRootView;
 
@@ -34,8 +36,6 @@ public abstract class BaseFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         initData();
     }
-
-
 
     protected abstract void initView();
 
@@ -68,18 +68,33 @@ public abstract class BaseFragment extends Fragment {
         startActivity(intent);
     }
 
-    //封装SharedPreferences存储信息
-    protected void saveStringToSp(String key, String val) {
+    //封装Intent （堆栈）
+    public void navigateToWithFlag(Class cls, int flags) {
+        Intent intent = new Intent(getActivity(), cls);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
+
+    //插入
+    protected void insertVal(String key, String val) {
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("sp_example", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(key, val);
         editor.commit();
     }
 
-    //封装SharedPreferences得到信息
-    protected String getStringFromSP(String key) {
+    //查询
+    protected String findByKey(String key) {
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("sp_example", Context.MODE_PRIVATE);
         return sharedPreferences.getString(key, "");
+    }
+
+    //删除封装SharedPreferences的key
+    protected void removeByKey(String key) {
+        SharedPreferences sp = getActivity().getSharedPreferences("sp_example", MODE_PRIVATE);
+        SharedPreferences.Editor edit = sp.edit();
+        edit.remove(key);
+        edit.commit();
     }
 
     protected VideoViewManager getVideoViewManager() {

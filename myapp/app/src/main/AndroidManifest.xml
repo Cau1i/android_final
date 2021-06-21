@@ -36,6 +36,9 @@
         <activity
             android:name=".activity.WebActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.MyCollectActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

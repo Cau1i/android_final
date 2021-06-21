@@ -1,6 +1,8 @@
 package com.example.myapp.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,28 +14,33 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dueeeke.videocontroller.component.PrepareView;
+import com.google.gson.Gson;
+import com.squareup.picasso.Picasso;
 import com.example.myapp.R;
+import com.example.myapp.api.Api;
+import com.example.myapp.api.ApiConfig;
+import com.example.myapp.api.TtitCallback;
+import com.example.myapp.entity.BaseResponse;
 import com.example.myapp.entity.VideoEntity;
 import com.example.myapp.listener.OnItemChildClickListener;
 import com.example.myapp.listener.OnItemClickListener;
 import com.example.myapp.view.CircleTransform;
-import com.example.myapp.view.FixedViewPager;
-import com.squareup.picasso.Picasso;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class VideoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
     private Context mContext;
     private List<VideoEntity> datas;
-    private ViewGroup parent;
-    private int viewType;
-
-    private OnItemChildClickListener mOnItemChildClickListener;
-    private OnItemClickListener mOnItemClickListener;
 
     public void setDatas(List<VideoEntity> datas) {
         this.datas = datas;
     }
+
+    private OnItemChildClickListener mOnItemChildClickListener;
+
+    private OnItemClickListener mOnItemClickListener;
 
     public VideoAdapter(Context context) {
         this.mContext = context;
@@ -54,44 +61,41 @@ public class VideoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        ViewHolder viewHolder = (ViewHolder) holder;
+        ViewHolder vh = (ViewHolder) holder;
         VideoEntity videoEntity = datas.get(position);
-        viewHolder.tvAuthor.setText(videoEntity.getAuthor());
-        viewHolder.tvTitle.setText(videoEntity.getVtitle());
-        viewHolder.tvComment.setText(String.valueOf(videoEntity.getCommentnum()));
-        viewHolder.tvCollect.setText(String.valueOf(videoEntity.getCollectnum()));
-        viewHolder.tvLike.setText(String.valueOf(videoEntity.getLikenum()));
-//        if (videoEntity.getVideoSocialEntity() != null) {
-//            int likenum = videoEntity.getVideoSocialEntity().getLikenum();
-//            int commentnum = videoEntity.getVideoSocialEntity().getCommentnum();
-//            int collectnum = videoEntity.getVideoSocialEntity().getCollectnum();
-//            boolean flagLike = videoEntity.getVideoSocialEntity().isFlagLike();
-//            boolean flagCollect = videoEntity.getVideoSocialEntity().isFlagCollect();
-//            if (flagLike) {
-//                viewHolder.tvLike.setTextColor(Color.parseColor("#E21918"));
-//                viewHolder.imgDizan.setImageResource(R.mipmap.dianzan_select);
-//            }
-//            if (flagCollect) {
-//                viewHolder.tvCollect.setTextColor(Color.parseColor("#E21918"));
-//                viewHolder.imgCollect.setImageResource(R.mipmap.collect_select);
-//            }
-//            viewHolder.tvLike.setText(String.valueOf(likenum));
-//            viewHolder.tvComment.setText(String.valueOf(commentnum));
-//            viewHolder.tvCollect.setText(String.valueOf(collectnum));
-//            viewHolder.flagCollect = flagCollect;
-//            viewHolder.flagLike = flagLike;
-//        }
+        vh.tvTitle.setText(videoEntity.getVtitle());
+        vh.tvAuthor.setText(videoEntity.getAuthor());
+        if (videoEntity.getVideoSocialEntity() != null) {
+            int likenum = videoEntity.getVideoSocialEntity().getLikenum();
+            int commentnum = videoEntity.getVideoSocialEntity().getCommentnum();
+            int collectnum = videoEntity.getVideoSocialEntity().getCollectnum();
+            boolean flagLike = videoEntity.getVideoSocialEntity().isFlagLike();
+            boolean flagCollect = videoEntity.getVideoSocialEntity().isFlagCollect();
+            if (flagLike) {
+                vh.tvLike.setTextColor(Color.parseColor("#677fad"));
+                vh.imgLike.setImageResource(R.mipmap.like_selected);
+            }
+            if (flagCollect) {
+                vh.tvCollect.setTextColor(Color.parseColor("#677fad"));
+                vh.imgCollect.setImageResource(R.mipmap.collect_selected);
+            }
+            vh.tvLike.setText(String.valueOf(likenum));
+            vh.tvComment.setText(String.valueOf(commentnum));
+            vh.tvCollect.setText(String.valueOf(collectnum));
+            vh.flagCollect = flagCollect;
+            vh.flagLike = flagLike;
 
+        }
         //异步加载图片
         Picasso.with(mContext)
                 .load(videoEntity.getHeadurl())
                 .transform(new CircleTransform())
-                .into(viewHolder.imgHeader);
+                .into(vh.imgHeader);
+
         Picasso.with(mContext)
                 .load(videoEntity.getCoverurl())
-                .into(viewHolder.mThumb);
-
-        viewHolder.mPosition = position;
+                .into(vh.mThumb);
+        vh.mPosition = position;
     }
 
     @Override
@@ -104,13 +108,78 @@ public class VideoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private TextView tvAuthor, tvTitle, tvComment, tvCollect, tvLike;
-        private ImageView imgHeader;
-
-        public FrameLayout mPlayerContainer;
-        public PrepareView mPrepareView;
+        private TextView tvTitle, tvAuthor, tvLike, tvComment, tvCollect;
+        private ImageView imgHeader, imgCollect, imgLike, imgComment;
         public ImageView mThumb;
+        public PrepareView mPrepareView;
+        public FrameLayout mPlayerContainer;
         public int mPosition;
+        private boolean flagCollect, flagLike;
+
+        public ViewHolder(@NonNull View view) {
+            super(view);
+            tvAuthor = view.findViewById(R.id.tv_author);
+            tvTitle = view.findViewById(R.id.tv_title);
+            tvComment = view.findViewById(R.id.tv_comment);
+            tvCollect = view.findViewById(R.id.tv_collect);
+            tvLike = view.findViewById(R.id.tv_like);
+            imgHeader = view.findViewById(R.id.img_header);
+            imgComment = view.findViewById(R.id.img_comment);
+            imgCollect = view.findViewById(R.id.img_collect);
+            imgLike = view.findViewById(R.id.img_like);
+            mPlayerContainer = view.findViewById(R.id.player_container);
+            mPrepareView = view.findViewById(R.id.prepare_view);
+            mThumb = mPrepareView.findViewById(R.id.thumb);
+            if (mOnItemChildClickListener != null) {
+                mPlayerContainer.setOnClickListener(this);
+            }
+            if (mOnItemClickListener != null) {
+                view.setOnClickListener(this);
+            }
+            imgCollect.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int collectNum = Integer.parseInt(tvCollect.getText().toString());
+                    if (flagCollect) { //已收藏 点击后收藏-1
+                        if (collectNum > 0) {
+                            tvCollect.setText(String.valueOf(--collectNum));
+                            tvCollect.setTextColor(Color.parseColor("#161616"));
+                            imgCollect.setImageResource(R.mipmap.collect_unselected);
+                            updateCount(datas.get(mPosition).getVid(), 1, !flagCollect);
+                        }
+                    } else {//未收藏 点击后收藏+1
+                        tvCollect.setText(String.valueOf(++collectNum));
+                        tvCollect.setTextColor(Color.parseColor("#677fad"));
+                        imgCollect.setImageResource(R.mipmap.collect_selected);
+                        updateCount(datas.get(mPosition).getVid(), 1, !flagCollect);//数据库更新数据
+                    }
+                    flagCollect = !flagCollect;//UI更新数据 相当于刷新界面
+                }
+            });
+            imgLike.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int likeNum = Integer.parseInt(tvLike.getText().toString());
+                    if (flagLike) { //已点赞 点击后点赞 -1
+                        if (likeNum > 0) {
+                            tvLike.setText(String.valueOf(--likeNum));
+                            tvLike.setTextColor(Color.parseColor("#707070"));
+                            imgLike.setImageResource(R.mipmap.like_unselected);
+                            updateCount(datas.get(mPosition).getVid(), 2, !flagLike);
+                        }
+                    } else {//未点赞 点击后点赞 +1
+                        tvLike.setText(String.valueOf(++likeNum));
+                        tvLike.setTextColor(Color.parseColor("#677fad"));
+                        imgLike.setImageResource(R.mipmap.like_selected);
+                        updateCount(datas.get(mPosition).getVid(), 2, !flagLike);//数据库更新数据
+                    }
+                    flagLike = !flagLike;//UI更新数据 相当于刷新界面
+                }
+            });
+
+            //通过tag将ViewHolder和itemView绑定
+            view.setTag(this);
+        }
 
         @Override
         public void onClick(View v) {
@@ -123,29 +192,32 @@ public class VideoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                     mOnItemClickListener.onItemClick(mPosition);
                 }
             }
-        }
 
-        public ViewHolder(@NonNull View view) {
-            super(view);
-            tvAuthor = view.findViewById(R.id.tv_author);
-            tvTitle = view.findViewById(R.id.tv_title);
-            tvComment = view.findViewById(R.id.tv_comment);
-            tvCollect = view.findViewById(R.id.tv_collect);
-            tvLike = view.findViewById(R.id.tv_like);
-            imgHeader = view.findViewById(R.id.img_header);
-            mPlayerContainer = view.findViewById(R.id.player_container);
-            mPrepareView = view.findViewById(R.id.prepare_view);
-            mThumb = mPrepareView.findViewById(R.id.thumb);
-            if (mOnItemChildClickListener != null) {
-                mPlayerContainer.setOnClickListener(this);
-            }
-            if (mOnItemClickListener != null) {
-                view.setOnClickListener(this);
+        }
+    }
+
+    //更新点赞、收藏数字
+    private void updateCount(int vid, int type, boolean flag) {
+        HashMap<String, Object> params = new HashMap<String, Object>();
+        params.put("vid", vid);
+        params.put("type", type);
+        params.put("flag", flag);
+        Api.config(ApiConfig.VIDEO_UPDATE_COUNT, params).postRequest(mContext, new TtitCallback() {
+            @Override
+            public void onSuccess(final String res) {
+                Log.e("onSuccess", res);
+                Gson gson = new Gson();
+                BaseResponse baseResponse = gson.fromJson(res, BaseResponse.class);
+                if (baseResponse.getCode() == 0) {
+
+                }
             }
 
-            //通过tag将ViewHolder和itemView绑定
-            view.setTag(this);
-        }
+            @Override
+            public void onFailure(Exception e) {
+
+            }
+        });
     }
 
     public void setOnItemChildClickListener(OnItemChildClickListener onItemChildClickListener) {

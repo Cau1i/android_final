@@ -27,7 +27,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        if (!StringUtils.isEmpty(getStringFromSP("token"))) {//登陆后，后序不需要再次登录
+        if (!StringUtils.isEmpty(findByKey("token"))) {//登陆后，后序不需要再次登录
             navigateTo(HomeActivity.class);
             finish();
         }
