@@ -39,7 +39,7 @@
                 android:paddingLeft="19dp">
 
                 <ImageView
-                    android:id="@+id/img_header"
+                    android:id="@+id/img_myHeader"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:src="@mipmap/my_header" />

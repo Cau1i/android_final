@@ -40,9 +40,16 @@ public abstract class BaseActivity extends AppCompatActivity {
         Looper.loop();
     }
 
-    ///封装Intent
+    //封装Intent
     public void navigateTo(Class cls) {
         Intent intent = new Intent(mContext, cls);
+        startActivity(intent);
+    }
+
+    //封装Intent （堆栈）
+    public void navigateToWithFlag(Class cls, int flags) {
+        Intent intent = new Intent(mContext, cls);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
 

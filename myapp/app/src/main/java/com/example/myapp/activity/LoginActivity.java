@@ -97,6 +97,7 @@ public class LoginActivity extends BaseActivity {
                 LoginResponse loginResponse = gson.fromJson(res, LoginResponse.class);
                 if (loginResponse.getCode() == 0) {//为0登录成功，得到token
                     String token = loginResponse.getToken();
+                    saveStringToSp("token", token);//将token存储到本地
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -109,7 +110,8 @@ public class LoginActivity extends BaseActivity {
 
                                 @Override
                                 public void onAnimationEnd(Animator animation) {
-                                    navigateTo(HomeActivity.class);//跳转到主页
+                                    navigateToWithFlag(HomeActivity.class,
+                                            Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);//跳转到主页 清除其他页面
                                 }
 
                                 @Override
@@ -124,7 +126,7 @@ public class LoginActivity extends BaseActivity {
                             });
                         }
                     });
-                    saveStringToSp("token", token);//将token存储到本地
+
 
                     showToastSync("登录成功");
                 } else {

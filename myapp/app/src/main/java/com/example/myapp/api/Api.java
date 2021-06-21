@@ -98,11 +98,11 @@ public class Api {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 final String result = response.body().string();
-                try {
+                try {//token超时，返回code 401
                     JSONObject jsonObject = new JSONObject(result);
                     String code = jsonObject.getString("code");
                     if (code.equals("401")) {
-                        Intent in = new Intent(context, LoginActivity.class);
+                        Intent in = new Intent(context, LoginActivity.class);//跳转回登陆界面
                         context.startActivity(in);
                     }
                 } catch (JSONException e) {

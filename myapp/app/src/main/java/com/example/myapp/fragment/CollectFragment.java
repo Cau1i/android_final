@@ -9,13 +9,21 @@ import androidx.fragment.app.Fragment;
 
 import com.example.myapp.R;
 
-public class CollectFragment extends Fragment {
+public class CollectFragment extends BaseFragment {
+    @Override
+    protected void initView() {
 
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    }
 
-    private String mParam1;
-    private String mParam2;
+    @Override
+    protected void initData() {
+
+    }
+
+    @Override
+    protected int initLayout() {
+        return R.layout.fragment_collect;
+    }
 
     public CollectFragment() {
     }
@@ -23,20 +31,5 @@ public class CollectFragment extends Fragment {
     public static CollectFragment newInstance() {
         CollectFragment fragment = new CollectFragment();
         return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_collect, container, false);
     }
 }

@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.myapp.activity.*;
+import com.example.myapp.util.StringUtils;
 
 public class MainActivity extends BaseActivity {
     private Button btnLogin;
@@ -26,6 +27,10 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initData() {
+        if (!StringUtils.isEmpty(getStringFromSP("token"))) {//登陆后，后序不需要再次登录
+            navigateTo(HomeActivity.class);
+            finish();
+        }
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

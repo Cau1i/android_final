@@ -53,10 +53,7 @@ public class HomeFragment extends BaseFragment {
 
     //视频类型tab接口
     private void getVideoCategoryList() {
-        String token = getStringFromSP("token");
-        if (!StringUtils.isEmpty(token)) {
             HashMap<String, Object> params = new HashMap<>();
-            params.put("token", token);
             Api.config(ApiConfig.VIDEO_CATEGORY_LIST, params).getRequest(getActivity(), new TtitCallback() {
                 @Override
                 public void onSuccess(final String res) {
@@ -86,6 +83,5 @@ public class HomeFragment extends BaseFragment {
                 public void onFailure(Exception e) {
                 }
             });
-        }
     }
 }

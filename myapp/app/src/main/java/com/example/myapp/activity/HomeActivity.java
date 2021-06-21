@@ -18,7 +18,7 @@ import java.util.ArrayList;
 public class HomeActivity extends BaseActivity implements View.OnClickListener {
     private ViewPager2 viewPager2;
     private MyFragmentStateAdapter myFragmentStateAdapter;
-    private RadioButton rb_home, rb_news, rb_my, rb_current;
+    private RadioButton rbHome, rbNews, rbMy, rbCurrent;
     private ArrayList<Fragment> mFragments = new ArrayList<>();
 
     @Override
@@ -28,16 +28,16 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     protected void initView() {
-        rb_home = findViewById(R.id.tab_home);
-        rb_news = findViewById(R.id.tab_news);
-        rb_my = findViewById(R.id.tab_mine);
+        rbHome = findViewById(R.id.tab_home);
+        rbNews = findViewById(R.id.tab_news);
+        rbMy = findViewById(R.id.tab_mine);
 
-        rb_home.setOnClickListener(this);
-        rb_news.setOnClickListener(this);
-        rb_my.setOnClickListener(this);
+        rbHome.setOnClickListener(this);
+        rbNews.setOnClickListener(this);
+        rbMy.setOnClickListener(this);
 
-        rb_home.setSelected(false);
-        rb_current = rb_home;
+        rbHome.setSelected(false);
+        rbCurrent = rbHome;
     }
 
     @Override
@@ -64,26 +64,26 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
     }
 
     private void changeTab(int position) {
-        //rb_current为当前的按钮
-        rb_current.setSelected(false);
+        //rbCurrent为当前的按钮
+        rbCurrent.setSelected(false);
         switch (position) {
             case R.id.tab_home:
                 viewPager2.setCurrentItem(0, false);
             case 0:
-                rb_home.setSelected(true);
-                rb_current = rb_home;
+                rbHome.setSelected(true);
+                rbCurrent = rbHome;
                 break;
             case R.id.tab_news:
                 viewPager2.setCurrentItem(1, false);
             case 1:
-                rb_news.setSelected(true);
-                rb_current = rb_news;
+                rbNews.setSelected(true);
+                rbCurrent = rbNews;
                 break;
             case R.id.tab_mine:
                 viewPager2.setCurrentItem(2, false);
             case 2:
-                rb_my.setSelected(true);
-                rb_current = rb_my;
+                rbMy.setSelected(true);
+                rbCurrent = rbMy;
                 break;
         }
     }

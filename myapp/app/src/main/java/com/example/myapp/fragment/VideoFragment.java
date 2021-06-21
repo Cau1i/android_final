@@ -253,10 +253,7 @@ public class VideoFragment extends BaseFragment implements OnItemChildClickListe
 
     //获得视频数据接口
     private void getVideoList(final boolean isRefresh) {
-        String token = getStringFromSP("token");
-        if (!StringUtils.isEmpty(token)) {
             HashMap<String, Object> params = new HashMap<>();
-            params.put("token", token);
             params.put("page", pageNum);
             params.put("limit", ApiConfig.PAGE_SIZE);
             params.put("categoryId", categoryId);
@@ -297,6 +294,5 @@ public class VideoFragment extends BaseFragment implements OnItemChildClickListe
                     }
                 }
             });
-        }
     }
 }

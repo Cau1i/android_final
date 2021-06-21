@@ -26,7 +26,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-
 public class NewsFragment extends BaseFragment {
 
     private RecyclerView recyclerView;

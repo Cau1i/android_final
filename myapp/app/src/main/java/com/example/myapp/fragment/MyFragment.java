@@ -1,21 +1,16 @@
 package com.example.myapp.fragment;
 
-import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-
-import androidx.fragment.app.Fragment;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.example.myapp.R;
 
-public class MyFragment extends Fragment {
+public class MyFragment extends BaseFragment implements View.OnClickListener {
 
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    private String mParam1;
-    private String mParam2;
+    private ImageView imgHeader;
+    private RelativeLayout rlCollect, rlSkin, rlLogout;
 
     public MyFragment() {
     }
@@ -26,17 +21,43 @@ public class MyFragment extends Fragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+    protected void initView() {
+        imgHeader = mRootView.findViewById(R.id.img_myHeader);
+        rlCollect = mRootView.findViewById(R.id.rl_collect);
+        rlSkin = mRootView.findViewById(R.id.rl_skin);
+        rlLogout = mRootView.findViewById(R.id.rl_logout);
+
+
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_my, container, false);
+    protected void initData() {
+        imgHeader.setOnClickListener(this::onClick);
+        rlCollect.setOnClickListener(this::onClick);
+        rlSkin.setOnClickListener(this::onClick);
+        rlLogout.setOnClickListener(this::onClick);
+    }
+
+    @Override
+    protected int initLayout() {
+        return R.layout.fragment_my;
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.img_myHeader:
+                showToast("img_header");
+                break;
+            case R.id.rl_collect:
+//                navigateTo(CollectFragment.class);
+                break;
+            case R.id.rl_skin:
+                showToast("rl_skin");
+                break;
+            case R.id.rl_logout:
+                showToast("退出登录");
+                break;
+        }
     }
 }
