@@ -1,6 +1,5 @@
 package com.example.myapp.fragment;
 
-
 import android.content.pm.ActivityInfo;
 import android.os.Handler;
 import android.os.Message;
@@ -39,7 +38,6 @@ import java.util.HashMap;
 import java.util.List;
 
 public class VideoFragment extends BaseFragment implements OnItemChildClickListener {
-
     private int categoryId;
     private RecyclerView recyclerView;
     private RefreshLayout refreshLayout;

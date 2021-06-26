@@ -23,7 +23,6 @@ public class HomeFragment extends BaseFragment {
     private ViewPager mViewPager;
     private HomeAdapter mHomeAdapter;
     private ArrayList<Fragment> mFragments = new ArrayList<>();
-    ;
     private String[] mTitles;
 
 

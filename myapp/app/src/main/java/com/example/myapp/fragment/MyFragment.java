@@ -10,8 +10,6 @@ import com.example.myapp.activity.LoginActivity;
 import com.example.myapp.activity.MyCollectActivity;
 
 public class MyFragment extends BaseFragment implements View.OnClickListener {
-
-
     private ImageView imgHeader;
     private RelativeLayout rlCollect, rlSkin, rlLogout;
 

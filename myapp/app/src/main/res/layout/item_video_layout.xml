@@ -67,7 +67,8 @@
                 android:layout_gravity="center_vertical"
                 android:text="这是文章的标题,写一些关于与内容相关的信息。"
                 android:textColor="@color/black"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:textStyle="bold" />
         </LinearLayout>
 
         <FrameLayout

@@ -3,7 +3,23 @@ package com.example.myapp.entity;
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ * @author: wei
+ * @date: 2020-08-01
+ **/
+
 public class NewsEntity implements Serializable {
+    /**
+     * newsId : 1
+     * newsTitle : 《忍者蛙》发售日公布 已上架Steam、支持简中
+     * authorName : 3DMGAME
+     * headerUrl : https://p9.pstatp.com/thumb/6eed00026c4eac713a44
+     * commentCount : 3
+     * releaseDate : 2020-07-31 22:23:00
+     * type : 1
+     * thumbEntities : [{"thumbId":1,"thumbUrl":"http://p1-tt.byteimg.com/large/pgc-image/S6KR5958Y5X2Qt?from=pc","newsId":1}]
+     */
+
     private int newsId;
     private String newsTitle;
     private String authorName;
@@ -78,6 +94,12 @@ public class NewsEntity implements Serializable {
     }
 
     public static class ThumbEntitiesBean {
+        /**
+         * thumbId : 1
+         * thumbUrl : http://p1-tt.byteimg.com/large/pgc-image/S6KR5958Y5X2Qt?from=pc
+         * newsId : 1
+         */
+
         private int thumbId;
         private String thumbUrl;
         private int newsId;
