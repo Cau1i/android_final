@@ -43,15 +43,18 @@ public class VideoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     private Context mContext;
     private List<VideoEntity> mDatas;
 
+    public void setDatas(List<VideoEntity> datas) {
+        this.mDatas = datas;
+    }
+
     private OnItemChildClickListener mOnItemChildClickListener;
     private OnItemClickListener mOnItemClickListener;
 
     public VideoAdapter() {
     }
 
-    public VideoAdapter(Context context, List<VideoEntity> datas) {
+    public VideoAdapter(Context context) {
         this.mContext = context;
-        this.mDatas = datas;
     }
 
     @NonNull
@@ -78,6 +81,7 @@ public class VideoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         Picasso.with(mContext)
                 .load(videoEntity.getCoverurl())
                 .into(vh.mThumb);
+        vh.mPosition = position;
     }
 
     @Override

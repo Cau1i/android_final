@@ -86,7 +86,7 @@ public class VideoFragment extends BaseFragment implements OnItemChildClickListe
         mLinearLayoutManager = new LinearLayoutManager(getActivity());
         mLinearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
-        mVideoAdapter = new VideoAdapter(getActivity(), mDatas);
+        mVideoAdapter = new VideoAdapter(getActivity());
         mVideoAdapter.setOnItemChildClickListener(this);
         mRecyclerView.setAdapter(mVideoAdapter);
         mRecyclerView.addOnChildAttachStateChangeListener(new RecyclerView.OnChildAttachStateChangeListener() {
@@ -136,6 +136,7 @@ public class VideoFragment extends BaseFragment implements OnItemChildClickListe
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
+                                mVideoAdapter.setDatas(mDatas);
                                 mVideoAdapter.notifyDataSetChanged();
                             }
                         });
@@ -211,7 +212,7 @@ public class VideoFragment extends BaseFragment implements OnItemChildClickListe
         if (mLastPos == -1)
             return;
         //恢复上次播放的位置
-//        startPlay(mLastPos);
+        startPlay(mLastPos);
     }
 
     /**

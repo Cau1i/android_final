@@ -192,7 +192,6 @@ public class VideoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                     mOnItemClickListener.onItemClick(mPosition);
                 }
             }
-
         }
     }
 
