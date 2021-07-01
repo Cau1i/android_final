@@ -2,7 +2,6 @@ package com.example.informationapp.activity;
 
 import android.animation.Animator;
 import android.content.Intent;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -14,11 +13,7 @@ import com.example.informationapp.sql.MyRoomDatabase;
 import com.example.informationapp.sql.User;
 import com.example.informationapp.util.StringUtils;
 import com.example.informationapp.R;
-import com.google.gson.Gson;
 
-import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class LoginActivity extends BaseActivity implements View.OnClickListener {
@@ -126,6 +121,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 break;
             case R.id.tv_create_an_account:
                 navigateTo(RegisterActivity.class);
+                this.finish();
                 break;
         }
     }

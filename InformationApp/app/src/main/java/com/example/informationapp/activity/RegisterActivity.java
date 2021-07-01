@@ -1,19 +1,15 @@
 package com.example.informationapp.activity;
 
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.informationapp.R;
 import com.example.informationapp.sql.MyRoomDatabase;
 import com.example.informationapp.sql.User;
 import com.example.informationapp.util.StringUtils;
 import com.example.informationapp.R;
-import com.example.informationapp.util.StringUtils;
 
-import java.util.HashMap;
 import java.util.List;
 
 public class RegisterActivity extends BaseActivity {
@@ -51,6 +47,7 @@ public class RegisterActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 navigateTo(LoginActivity.class);
+                finish();
             }
         });
     }
